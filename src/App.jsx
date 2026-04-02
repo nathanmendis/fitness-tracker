@@ -47,7 +47,13 @@ function App() {
 
   // Loading & Error States
   if (fitnessData.loading && !fitnessData.profile) return <LoadingState />;
-  if (fitnessData.error) return <ErrorState error={fitnessData.error} onRetry={fitnessData.loadAllData} />;
+  if (fitnessData.error) return (
+    <ErrorState 
+      error={fitnessData.error} 
+      onRetry={fitnessData.loadAllData} 
+      onReset={() => setShowSetup(true)} 
+    />
+  );
 
   return (
     <BrowserRouter>
