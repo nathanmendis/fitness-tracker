@@ -13,12 +13,14 @@ import {
   Lock, 
   Share2, 
   ClipboardList, 
-  PartyPopper 
+  PartyPopper,
+  PlayCircle
 } from 'lucide-react';
 
 import SetupForm from '../components/setup/SetupForm';
 import { fetchSheetData } from '../utils/api';
 import ErrorState from '../components/ErrorState';
+import onboardingVideo from '../assets/onboarding-demo.mp4';
 
 const SetupPage = ({ onComplete }) => {
   const { user, userData, setUserData } = useAuth();
@@ -74,6 +76,34 @@ const SetupPage = ({ onComplete }) => {
       icon: <Database className="text-[#0D3B66]" size={36} />,
       content: (
         <div className="space-y-6">
+          <div className="flex flex-col gap-3">
+            <a 
+              href={onboardingVideo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 bg-[#0D3B66] p-4 md:p-6 rounded-[2rem] md:rounded-[2.5rem] text-[#FDFBF7] shadow-2xl hover:scale-[1.02] active:scale-95 transition-all group relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent pointer-events-none" />
+              <div className="h-10 w-10 md:h-12 md:w-12 bg-white/10 rounded-xl md:rounded-2xl flex items-center justify-center shrink-0 group-hover:bg-white/20 transition-colors">
+                <PlayCircle size={20} className="md:w-6 md:h-6" />
+              </div>
+              <div className="text-left">
+                <h5 className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] mb-0.5">Watch Walkthrough</h5>
+                <p className="text-[9px] md:text-[11px] font-medium opacity-60">Complete video guide (Recommended)</p>
+              </div>
+              <ExternalLink size={14} className="ml-auto opacity-30 group-hover:opacity-100 transition-opacity" />
+            </a>
+
+            <a 
+              href="https://drive.google.com/drive/folders/1t3DhLcTPO4wCjimPqTNn2gWCdYLgGE01?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-[#0D3B66]/30 hover:text-[#0D3B66] transition-all"
+            >
+              View Video Folder <ExternalLink size={10} />
+            </a>
+          </div>
+
           <div className="bg-[#0D3B66]/5 p-8 rounded-[2.5rem] border border-[#0D3B66]/10 text-left">
             <h4 className="text-[10px] font-black uppercase tracking-[0.4em] mb-6 text-[#0D3B66]/40">Why connect a sheet?</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -258,11 +288,19 @@ const SetupPage = ({ onComplete }) => {
             </span>
          </div>
 
-         <div className="flex items-center gap-3 md:gap-4">
-            <button onClick={handleLogout} className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2.5 md:py-3 rounded-xl bg-white border border-[#0D3B66]/10 text-[#0D3B66] font-black uppercase text-[8px] md:text-[9px] tracking-[0.3em] hover:bg-[#0D3B66]/5 transition-all">
-              <LogOut size={12} className="md:w-3.5 md:h-3.5" /> <span className="hidden xs:inline">Sign Out</span>
-            </button>
-         </div>
+          <div className="flex items-center gap-3 md:gap-4">
+             <a 
+                href={onboardingVideo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2.5 md:py-3 rounded-xl bg-[#0D3B66] text-[#FDFBF7] font-black uppercase text-[8px] md:text-[9px] tracking-[0.3em] hover:scale-105 active:scale-95 transition-all shadow-xl"
+             >
+                <PlayCircle size={12} className="md:w-3.5 md:h-3.5" /> <span className="hidden xs:inline">Watch Demo</span>
+             </a>
+             <button onClick={handleLogout} className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2.5 md:py-3 rounded-xl bg-white border border-[#0D3B66]/10 text-[#0D3B66] font-black uppercase text-[8px] md:text-[9px] tracking-[0.3em] hover:bg-[#0D3B66]/5 transition-all">
+               <LogOut size={12} className="md:w-3.5 md:h-3.5" /> <span className="hidden xs:inline">Sign Out</span>
+             </button>
+          </div>
       </div>
 
       <div className="w-full max-w-3xl relative z-10 animate-premium mt-16 md:mt-0">
