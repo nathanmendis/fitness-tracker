@@ -7,16 +7,21 @@ import axios from 'axios';
  */
 export const fetchSheetData = async (sheetId, sheetName) => {
   if (!sheetId) {
-    throw new Error(`Critical Error: Synchronization ID (Sheet ID) is missing for [${sheetName}].`);
+    throw new Error(`Critical Error: Sheet ID is missing for [${sheetName}].`);
   }
 
   const baseUrl = `https://opensheet.elk.sh/${sheetId}`;
 
   try {
     const response = await axios.get(`${baseUrl}/${sheetName}`);
+    if (response.data && response.data.error) {
+       throw new Error(`Google Sheets API Error: ${response.data.error}`);
+    }
     return response.data;
   } catch (error) {
-    console.warn(`Could not fetch [${sheetName}] for sheet [${sheetId}].`);
-    return [];
+    const msg = error.response?.status === 404 
+       ? `Sheet tab [${sheetName}] or ID [${sheetId}] not found. Ensure ID is correct and tab is named exactly "${sheetName}".`
+       : `Could not connect to Google Sheet. Ensure it is shared with "Anyone with the link" as a Viewer and the ID is correct.`;
+    throw new Error(msg);
   }
 };
